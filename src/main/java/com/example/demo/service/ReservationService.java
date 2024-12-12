@@ -35,11 +35,16 @@ public class ReservationService {
     }
 
     // TODO: 1. 트랜잭션 이해
+    @Transactional
     public void createReservation(Long itemId, Long userId, LocalDateTime startAt, LocalDateTime endAt) {
         // 쉽게 데이터를 생성하려면 아래 유효성검사 주석 처리
-        List<Reservation> haveReservations = reservationRepository.findConflictingReservations(itemId, startAt, endAt);
-        if(!haveReservations.isEmpty()) {
-            throw new ReservationConflictException("해당 물건은 이미 그 시간에 예약이 있습니다.");
+//        List<Reservation> haveReservations = reservationRepository.findConflictingReservations(itemId, startAt, endAt);
+//        if(!haveReservations.isEmpty()) {
+//            throw new ReservationConflictException("해당 물건은 이미 그 시간에 예약이 있습니다.");
+//        }
+
+        if (itemId == null || userId == null || startAt == null || endAt == null) {
+            throw new IllegalArgumentException("필수 값이 null일 수 없습니다.");
         }
 
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException("해당 ID에 맞는 값이 존재하지 않습니다."));

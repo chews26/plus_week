@@ -25,4 +25,10 @@ public class RentalLog {
     }
 
     public RentalLog() {}
+
+    public void setMessage(String 테스트_로그_메세지) {
+    }
+
+    public void setActionType(String create) {
+    }
 }
