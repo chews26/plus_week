@@ -18,6 +18,8 @@ public class ReservationRepositoryCustomImpl implements ReservationRepositoryCus
     public List<Reservation> searchReservations(Long userId, Long itemId) {
         return jpaQueryFactory
                 .selectFrom(reservation)
+                .leftJoin(reservation.user).fetchJoin()
+                .leftJoin(reservation.item).fetchJoin()
                 .where(reservation.user.id.eq(userId),
                        reservation.item.id.eq(itemId)
                 )
