@@ -17,7 +17,7 @@ public class User {
     private String password;
 
     @Enumerated(value = EnumType.STRING)
-    private ItemStatus reservationStatus; // NORMAL, BLOCKED
+    private UserStatus userStatus; // NORMAL, BLOCKED
 
     @Column(nullable = false, columnDefinition = "varchar(20) default 'NORMAL'")
     @Enumerated(value = EnumType.STRING)
@@ -33,7 +33,7 @@ public class User {
     public User() {}
 
     public void updateStatusToBlocked() {
-        this.status = "BLOCKED";
+        this.userStatus = UserStatus.BLOCKED;
     }
 
     // 연관관계

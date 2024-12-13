@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>, ReservationRepositoryCustom {
@@ -28,7 +27,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>,
     @Query("SELECT r FROM Reservation r " +
             "WHERE r.item.id = :id " +
             "AND NOT (r.endAt <= :startAt OR r.startAt >= :endAt) " +
-            "AND r.status = 'APPROVED'")
+            "AND r.status = com.example.demo.entity.ReservationStatus.APPROVED")
     List<Reservation> findConflictingReservations(
             @Param("id") Long id,
             @Param("startAt") LocalDateTime startAt,
