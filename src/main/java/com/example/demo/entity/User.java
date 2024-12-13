@@ -30,4 +30,7 @@ public class User {
     public void updateStatusToBlocked() {
         this.status = "BLOCKED";
     }
+
+    // 연관관계
+
 }
