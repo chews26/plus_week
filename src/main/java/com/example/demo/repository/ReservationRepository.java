@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -18,6 +19,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>,
     List<Reservation> findByUserId(Long userId);
 
     List<Reservation> findByItemId(Long itemId);
+
+    default Reservation findByIdOrElseThrow(Long id){
+        return findById(id).orElseThrow(() -> new NoSuchElementException("해당 ID에 맞는 데이터가 존재하지 않습니다."));
+    }
+
 
     @Query("SELECT r FROM Reservation r " +
             "WHERE r.item.id = :id " +

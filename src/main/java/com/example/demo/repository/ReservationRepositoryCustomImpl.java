@@ -3,7 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.entity.Reservation;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
@@ -24,5 +23,13 @@ public class ReservationRepositoryCustomImpl implements ReservationRepositoryCus
                        reservation.item.id.eq(itemId)
                 )
                 .fetch();
+    }
+
+    @Override
+    public Reservation searchReservationIdAndStatus(Long reservationId) {
+        return jpaQueryFactory
+                .selectFrom(reservation)
+                .where(reservation.id.eq(reservationId))
+                .fetchOne();
     }
 }

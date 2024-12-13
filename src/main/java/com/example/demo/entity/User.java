@@ -17,7 +17,7 @@ public class User {
     private String password;
 
     @Enumerated(value = EnumType.STRING)
-    private String status; // NORMAL, BLOCKED
+    private ItemStatus reservationStatus; // NORMAL, BLOCKED
 
     @Column(nullable = false, columnDefinition = "varchar(20) default 'NORMAL'")
     @Enumerated(value = EnumType.STRING)

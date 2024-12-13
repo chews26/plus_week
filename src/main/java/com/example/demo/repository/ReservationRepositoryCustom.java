@@ -7,4 +7,6 @@ import java.util.List;
 public interface ReservationRepositoryCustom {
 
     List<Reservation> searchReservations(Long userId, Long itemId);
+
+    Reservation searchReservationIdAndStatus(Long reservationId);
 }
