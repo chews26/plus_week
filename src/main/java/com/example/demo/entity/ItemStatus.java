@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ItemStatus {
-    FENDING("fending"),
+    PENDING("pending"),
     APPROVED("approved"),
     EXPIRED("expired"),
     CANCELED("canceled");
