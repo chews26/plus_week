@@ -43,11 +43,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
 
-    //test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'com.h2database:h2'
-    compileOnly "org.springframework.boot:spring-boot-devtools"
     testImplementation 'org.mockito:mockito-inline:5.2.0'
+
 }
 
 

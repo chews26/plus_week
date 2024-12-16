@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @Getter
 @DynamicInsert
+@Table(name = "`user`")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

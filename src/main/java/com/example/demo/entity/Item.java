@@ -31,8 +31,7 @@ public class Item {
     private User manager;
 
 
-//    @Column(name = "item_status", nullable = false, columnDefinition = "varchar(20) default 'PENDING'")
-    @Column(name = "item_status", nullable = false)
+    @Column(name = "item_status", nullable = false, columnDefinition = "varchar(20) default 'PENDING'")
     @Enumerated(value = EnumType.STRING)
     private ItemStatus itemStatus;
 
