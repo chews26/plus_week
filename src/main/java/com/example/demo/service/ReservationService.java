@@ -6,16 +6,16 @@ import com.example.demo.entity.RentalLog;
 import com.example.demo.entity.Reservation;
 import com.example.demo.entity.ReservationStatus;
 import com.example.demo.entity.User;
-import com.example.demo.exception.ReservationConflictException;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -37,7 +37,7 @@ public class ReservationService {
 
     // TODO: 1. 트랜잭션 이해
     @Transactional
-    public void createReservation(Long itemId, Long userId, LocalDateTime startAt, LocalDateTime endAt) {
+    public Reservation createReservation(Long itemId, Long userId, LocalDateTime startAt, LocalDateTime endAt) {
         // 쉽게 데이터를 생성하려면 아래 유효성검사 주석 처리
 //        List<Reservation> haveReservations = reservationRepository.findConflictingReservations(itemId, startAt, endAt);
 //        if(!haveReservations.isEmpty()) {
@@ -55,16 +55,20 @@ public class ReservationService {
 
         RentalLog rentalLog = new RentalLog(savedReservation, "로그 메세지", "CREATE");
         rentalLogService.save(rentalLog);
+        return reservation;
     }
 
     // TODO: 3. N+1 문제
     public List<ReservationResponseDto> getReservations() {
         List<Reservation> reservations = reservationRepository.findAllReservations();
 
+        if (reservations.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "예약내용이 없습니다.");
+        }
+
         return reservations.stream().map(reservation -> {
             User user = reservation.getUser();
             Item item = reservation.getItem();
-
             return new ReservationResponseDto(
                     reservation.getId(),
                     user.getNickname(),

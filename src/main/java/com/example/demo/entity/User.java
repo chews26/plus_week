@@ -38,6 +38,9 @@ public class User {
         this.userStatus = UserStatus.BLOCKED;
     }
 
-    // 연관관계
+    public User(Long id, String nickname) {
+        this.id = id;
+        this.nickname = nickname;
 
+    }
 }

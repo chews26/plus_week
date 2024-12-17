@@ -33,6 +33,7 @@ public class ReservationController {
     @GetMapping
     public List<ReservationResponseDto> findAll() {
         return reservationService.getReservations();
+
     }
 
     @GetMapping("/search")
