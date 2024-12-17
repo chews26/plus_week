@@ -4,8 +4,9 @@ import com.example.demo.dto.ReservationRequestDto;
 import com.example.demo.dto.ReservationResponseDto;
 import com.example.demo.entity.ReservationStatus;
 import com.example.demo.service.ReservationService;
-import org.hibernate.mapping.List;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
