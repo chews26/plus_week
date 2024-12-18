@@ -2,11 +2,13 @@ package com.example.demo.password;
 
 import com.example.demo.util.PasswordEncoder;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 public class PasswordTest {
 
     @Test
