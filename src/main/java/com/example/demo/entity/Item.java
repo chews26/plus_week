@@ -54,5 +54,11 @@ public class Item {
     public Item() {}
 
     public void setId(long l) {
+
+    }
+
+    public Item(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }
