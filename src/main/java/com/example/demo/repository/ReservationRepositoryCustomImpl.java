@@ -27,9 +27,7 @@ public class ReservationRepositoryCustomImpl implements ReservationRepositoryCus
                 .selectFrom(reservation)
                 .leftJoin(reservation.user).fetchJoin()
                 .leftJoin(reservation.item).fetchJoin()
-                .where(reservation.user.id.eq(userId),
-                       reservation.item.id.eq(itemId)
-                )
+                .where(builder)
                 .fetch();
     }
 
