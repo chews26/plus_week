@@ -47,9 +47,6 @@ class ReservationServiceTest {
     @Mock
     private RentalLogRepository rentalLogRepository;
 
-    @Mock
-    private RentalLogService rentalLogService;
-
     @InjectMocks
     private ReservationService reservationService;
 
@@ -78,7 +75,6 @@ class ReservationServiceTest {
         verify(itemRepository).findById(testItem.getId());
         verify(userRepository).findById(testUser.getId());
         verify(reservationRepository).save(any(Reservation.class));
-
     }
 
     @Test
@@ -187,7 +183,7 @@ class ReservationServiceTest {
     @DisplayName("트랜잭션 내 예외 발생 시 롤백")
     void testTransactionRollbackOnException() {
         // Given
-        Long itemId = null; // 필수 값 null로 설정해 예외 발생 유도
+        Long itemId = null;
         Long userId = 1L;
         LocalDateTime startAt = LocalDateTime.now();
         LocalDateTime endAt = startAt.plusHours(2);
@@ -197,7 +193,6 @@ class ReservationServiceTest {
                 () -> reservationService.createReservation(itemId, userId, startAt, endAt));
 
         // Then
-        // 예약과 로그 모두 저장되지 않아야 함
         List<Reservation> reservations = reservationRepository.findAll();
         assertTrue(reservations.isEmpty());
 

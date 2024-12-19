@@ -52,7 +52,7 @@ class ReservationControllerTest {
     @Test
     @DisplayName("예약 생성")
     void createReservation() throws Exception {
-        // Given : 준비
+        // Given
         Long itemId = 1L;
         Long userId = 1L;
         LocalDateTime startAt = LocalDateTime.now();
@@ -64,19 +64,19 @@ class ReservationControllerTest {
         objectMapper.registerModule(new JavaTimeModule());
         String requestJson = objectMapper.writeValueAsString(requestDto);
 
-        // when : 액션
+        // when
         mockMvc.perform(post("/reservations")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(requestJson))
                 .andDo(print())
-                .andExpect(status().isOk()); // Then ; 결과 확인
+                .andExpect(status().isOk()); // Then
     }
 
 
     @Test
     @DisplayName("예약 조회")
     void getAllReservations() throws Exception {
-        // Given : 준비
+        // Given
         List<ReservationResponseDto> reservations = List.of(
                 new ReservationResponseDto(1L, "user1", "item1", LocalDateTime.of(2024, 12, 16, 9, 30), LocalDateTime.of(2020, 1, 1, 1, 0))
         );
@@ -85,7 +85,7 @@ class ReservationControllerTest {
         // when : 액션
         mockMvc.perform(get("/reservations"))
                 .andDo(print())
-                .andExpect(status().isOk()) // Then ; 결과 확인
+                .andExpect(status().isOk()) // Then 결과 확인
                 .andExpect(jsonPath("$[0].nickname").value("user1"))
                 .andExpect(jsonPath("$[0].itemName").value("item1"));
     }
@@ -93,12 +93,12 @@ class ReservationControllerTest {
     @Test
     @DisplayName("예약 조회 실패 테스트")
     void getAllReservationsThrowCheck() throws Exception {
-        // Given : 준비
+        // Given
         given(reservationService.getReservations()).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "예약내용이 없습니다."));
 
-        // when : 액션
+        // when
         mockMvc.perform(get("/reservations"))
                 .andDo(print())
-                .andExpect(status().isNotFound()) ;// Then ; 결과 확인
+                .andExpect(status().isNotFound()) ;// Then 결과 확인
     }
 }
