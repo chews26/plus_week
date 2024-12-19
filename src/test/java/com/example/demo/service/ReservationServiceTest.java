@@ -2,10 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ReservationResponseDto;
 import com.example.demo.entity.Item;
+import com.example.demo.entity.RentalLog;
 import com.example.demo.entity.Reservation;
 import com.example.demo.entity.ReservationStatus;
 import com.example.demo.entity.User;
 import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.RentalLogRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -28,6 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class ReservationServiceTest {
 
@@ -42,6 +46,9 @@ class ReservationServiceTest {
 
     @Mock
     private RentalLogService rentalLogService;
+
+    @Mock
+    private RentalLogRepository rentalLogRepository;
 
     @InjectMocks
     private ReservationService reservationService;
@@ -71,7 +78,6 @@ class ReservationServiceTest {
         verify(itemRepository).findById(testItem.getId());
         verify(userRepository).findById(testUser.getId());
         verify(reservationRepository).save(any(Reservation.class));
-
     }
 
     @Test
@@ -110,7 +116,7 @@ class ReservationServiceTest {
         // Then
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Test Item 1", result.getFirst().getItemName());
+        assertEquals("Test Item 1", result.get(0).getItemName());
 
         verify(reservationRepository).findAllReservations();
     }
@@ -174,5 +180,26 @@ class ReservationServiceTest {
         // Then
         assertEquals(status, reservation.getStatus());
         verify(reservationRepository).searchReservationIdAndStatus(reservationId);
+    }
+
+    @Test
+    @DisplayName("트랜잭션 내 예외 발생 시 롤백")
+    void testTransactionRollbackOnException() {
+        // Given
+        Long itemId = null;
+        Long userId = 1L;
+        LocalDateTime startAt = LocalDateTime.now();
+        LocalDateTime endAt = startAt.plusHours(2);
+
+        // When
+        assertThrows(IllegalArgumentException.class,
+                () -> reservationService.createReservation(itemId, userId, startAt, endAt));
+
+        // Then
+        List<Reservation> reservations = reservationRepository.findAll();
+        assertTrue(reservations.isEmpty());
+
+        List<RentalLog> rentalLogs = rentalLogRepository.findAll();
+        assertTrue(rentalLogs.isEmpty());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class Reservation {
 
     private ReservationStatus status; // PENDING, APPROVED, CANCELED, EXPIRED
 
+    @Builder
     public Reservation(Item item, User user, ReservationStatus status, LocalDateTime startAt, LocalDateTime endAt) {
         this.item = item;
         this.user = user;
