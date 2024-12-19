@@ -45,6 +45,9 @@ class ReservationServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private RentalLogService rentalLogService;
+
+    @Mock
     private RentalLogRepository rentalLogRepository;
 
     @InjectMocks
@@ -113,7 +116,7 @@ class ReservationServiceTest {
         // Then
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Test Item 1", result.getFirst().getItemName());
+        assertEquals("Test Item 1", result.get(0).getItemName());
 
         verify(reservationRepository).findAllReservations();
     }
