@@ -1,5 +1,5 @@
 # 플러스 주차 개인과제
-### [💻 플러스 주차 개인과제 작성 내용 바로가기 ](https://shinelee26.tistory.com/61)
+### [💻 플러스 주차 개인과제 작성 내용 바로가기 ](https://shinelee26.tistory.com/search/%ED%94%8C%EB%9F%AC%EC%8A%A4)
 ### [🧑‍⚕️heathcheck 바로가기](http://43.200.162.25:8080/health)
 
 ## 구현 완료
